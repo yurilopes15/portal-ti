@@ -1,0 +1,2 @@
+ALTER TABLE public.inventory_items DROP CONSTRAINT IF EXISTS inventory_items_responsavel_id_fkey;
+ALTER TABLE public.inventory_items ADD CONSTRAINT inventory_items_responsavel_id_fkey FOREIGN KEY (responsavel_id) REFERENCES public.profiles(id) ON DELETE SET NULL;

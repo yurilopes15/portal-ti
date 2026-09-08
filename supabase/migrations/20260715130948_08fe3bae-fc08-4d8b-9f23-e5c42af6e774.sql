@@ -1,0 +1,1 @@
+ALTER TABLE public.inventory_items ADD COLUMN IF NOT EXISTS bitlocker_id TEXT, ADD COLUMN IF NOT EXISTS bitlocker_recovery_key TEXT;

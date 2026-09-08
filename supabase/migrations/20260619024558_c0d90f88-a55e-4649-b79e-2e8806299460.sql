@@ -1,0 +1,10 @@
+ALTER TABLE public.tickets REPLICA IDENTITY FULL;
+ALTER TABLE public.ticket_comments REPLICA IDENTITY FULL;
+ALTER TABLE public.ticket_history REPLICA IDENTITY FULL;
+ALTER TABLE public.ticket_attachments REPLICA IDENTITY FULL;
+ALTER TABLE public.notifications REPLICA IDENTITY FULL;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.tickets;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.ticket_comments;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.ticket_history;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.ticket_attachments;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.notifications;

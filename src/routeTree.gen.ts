@@ -9,50 +9,562 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
+import { Route as AuthenticatedInventarioRouteImport } from './routes/_authenticated/inventario'
+import { Route as AuthenticatedBaseConhecimentoRouteImport } from './routes/_authenticated/base-conhecimento'
+import { Route as AuthenticatedTarefasIndexRouteImport } from './routes/_authenticated/tarefas.index'
+import { Route as AuthenticatedChamadosIndexRouteImport } from './routes/_authenticated/chamados/index'
+import { Route as AuthenticatedTarefasHistoricoRouteImport } from './routes/_authenticated/tarefas.historico'
+import { Route as AuthenticatedChamadosNovoRouteImport } from './routes/_authenticated/chamados/novo'
+import { Route as AuthenticatedChamadosIdRouteImport } from './routes/_authenticated/chamados/$id'
+import { Route as AuthenticatedAdminUsuariosRouteImport } from './routes/_authenticated/admin/usuarios'
+import { Route as AuthenticatedAdminTonersRouteImport } from './routes/_authenticated/admin/toners'
+import { Route as AuthenticatedAdminReservasConfigRouteImport } from './routes/_authenticated/admin/reservas-config'
+import { Route as AuthenticatedAdminInventarioConfigRouteImport } from './routes/_authenticated/admin/inventario-config'
+import { Route as AuthenticatedAdminDepartamentosRouteImport } from './routes/_authenticated/admin/departamentos'
+import { Route as AuthenticatedAdminChamadosConfigRouteImport } from './routes/_authenticated/admin/chamados-config'
+import { Route as AuthenticatedAdminBaseConhecimentoConfigRouteImport } from './routes/_authenticated/admin/base-conhecimento-config'
+import { Route as AuthenticatedReservasSalasIndexRouteImport } from './routes/_authenticated/reservas/salas.index'
+import { Route as AuthenticatedReservasEquipamentosIndexRouteImport } from './routes/_authenticated/reservas/equipamentos.index'
+import { Route as ApiPublicHooksPushDispatchRouteImport } from './routes/api/public/hooks/push-dispatch'
+import { Route as AuthenticatedReservasSalasIdRouteImport } from './routes/_authenticated/reservas/salas.$id'
+import { Route as AuthenticatedReservasEquipamentosIdRouteImport } from './routes/_authenticated/reservas/equipamentos.$id'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPerfilRoute = AuthenticatedPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedInventarioRoute = AuthenticatedInventarioRouteImport.update({
+  id: '/inventario',
+  path: '/inventario',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedBaseConhecimentoRoute =
+  AuthenticatedBaseConhecimentoRouteImport.update({
+    id: '/base-conhecimento',
+    path: '/base-conhecimento',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTarefasIndexRoute =
+  AuthenticatedTarefasIndexRouteImport.update({
+    id: '/tarefas/',
+    path: '/tarefas/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedChamadosIndexRoute =
+  AuthenticatedChamadosIndexRouteImport.update({
+    id: '/chamados/',
+    path: '/chamados/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTarefasHistoricoRoute =
+  AuthenticatedTarefasHistoricoRouteImport.update({
+    id: '/tarefas/historico',
+    path: '/tarefas/historico',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedChamadosNovoRoute =
+  AuthenticatedChamadosNovoRouteImport.update({
+    id: '/chamados/novo',
+    path: '/chamados/novo',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedChamadosIdRoute = AuthenticatedChamadosIdRouteImport.update({
+  id: '/chamados/$id',
+  path: '/chamados/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminUsuariosRoute =
+  AuthenticatedAdminUsuariosRouteImport.update({
+    id: '/admin/usuarios',
+    path: '/admin/usuarios',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminTonersRoute =
+  AuthenticatedAdminTonersRouteImport.update({
+    id: '/admin/toners',
+    path: '/admin/toners',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminReservasConfigRoute =
+  AuthenticatedAdminReservasConfigRouteImport.update({
+    id: '/admin/reservas-config',
+    path: '/admin/reservas-config',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminInventarioConfigRoute =
+  AuthenticatedAdminInventarioConfigRouteImport.update({
+    id: '/admin/inventario-config',
+    path: '/admin/inventario-config',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminDepartamentosRoute =
+  AuthenticatedAdminDepartamentosRouteImport.update({
+    id: '/admin/departamentos',
+    path: '/admin/departamentos',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminChamadosConfigRoute =
+  AuthenticatedAdminChamadosConfigRouteImport.update({
+    id: '/admin/chamados-config',
+    path: '/admin/chamados-config',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminBaseConhecimentoConfigRoute =
+  AuthenticatedAdminBaseConhecimentoConfigRouteImport.update({
+    id: '/admin/base-conhecimento-config',
+    path: '/admin/base-conhecimento-config',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReservasSalasIndexRoute =
+  AuthenticatedReservasSalasIndexRouteImport.update({
+    id: '/reservas/salas/',
+    path: '/reservas/salas/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReservasEquipamentosIndexRoute =
+  AuthenticatedReservasEquipamentosIndexRouteImport.update({
+    id: '/reservas/equipamentos/',
+    path: '/reservas/equipamentos/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const ApiPublicHooksPushDispatchRoute =
+  ApiPublicHooksPushDispatchRouteImport.update({
+    id: '/api/public/hooks/push-dispatch',
+    path: '/api/public/hooks/push-dispatch',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AuthenticatedReservasSalasIdRoute =
+  AuthenticatedReservasSalasIdRouteImport.update({
+    id: '/reservas/salas/$id',
+    path: '/reservas/salas/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReservasEquipamentosIdRoute =
+  AuthenticatedReservasEquipamentosIdRouteImport.update({
+    id: '/reservas/equipamentos/$id',
+    path: '/reservas/equipamentos/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/base-conhecimento': typeof AuthenticatedBaseConhecimentoRoute
+  '/inventario': typeof AuthenticatedInventarioRoute
+  '/perfil': typeof AuthenticatedPerfilRoute
+  '/admin/base-conhecimento-config': typeof AuthenticatedAdminBaseConhecimentoConfigRoute
+  '/admin/chamados-config': typeof AuthenticatedAdminChamadosConfigRoute
+  '/admin/departamentos': typeof AuthenticatedAdminDepartamentosRoute
+  '/admin/inventario-config': typeof AuthenticatedAdminInventarioConfigRoute
+  '/admin/reservas-config': typeof AuthenticatedAdminReservasConfigRoute
+  '/admin/toners': typeof AuthenticatedAdminTonersRoute
+  '/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
+  '/chamados/$id': typeof AuthenticatedChamadosIdRoute
+  '/chamados/novo': typeof AuthenticatedChamadosNovoRoute
+  '/tarefas/historico': typeof AuthenticatedTarefasHistoricoRoute
+  '/chamados/': typeof AuthenticatedChamadosIndexRoute
+  '/tarefas/': typeof AuthenticatedTarefasIndexRoute
+  '/reservas/equipamentos/$id': typeof AuthenticatedReservasEquipamentosIdRoute
+  '/reservas/salas/$id': typeof AuthenticatedReservasSalasIdRoute
+  '/api/public/hooks/push-dispatch': typeof ApiPublicHooksPushDispatchRoute
+  '/reservas/equipamentos/': typeof AuthenticatedReservasEquipamentosIndexRoute
+  '/reservas/salas/': typeof AuthenticatedReservasSalasIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/base-conhecimento': typeof AuthenticatedBaseConhecimentoRoute
+  '/inventario': typeof AuthenticatedInventarioRoute
+  '/perfil': typeof AuthenticatedPerfilRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/admin/base-conhecimento-config': typeof AuthenticatedAdminBaseConhecimentoConfigRoute
+  '/admin/chamados-config': typeof AuthenticatedAdminChamadosConfigRoute
+  '/admin/departamentos': typeof AuthenticatedAdminDepartamentosRoute
+  '/admin/inventario-config': typeof AuthenticatedAdminInventarioConfigRoute
+  '/admin/reservas-config': typeof AuthenticatedAdminReservasConfigRoute
+  '/admin/toners': typeof AuthenticatedAdminTonersRoute
+  '/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
+  '/chamados/$id': typeof AuthenticatedChamadosIdRoute
+  '/chamados/novo': typeof AuthenticatedChamadosNovoRoute
+  '/tarefas/historico': typeof AuthenticatedTarefasHistoricoRoute
+  '/chamados': typeof AuthenticatedChamadosIndexRoute
+  '/tarefas': typeof AuthenticatedTarefasIndexRoute
+  '/reservas/equipamentos/$id': typeof AuthenticatedReservasEquipamentosIdRoute
+  '/reservas/salas/$id': typeof AuthenticatedReservasSalasIdRoute
+  '/api/public/hooks/push-dispatch': typeof ApiPublicHooksPushDispatchRoute
+  '/reservas/equipamentos': typeof AuthenticatedReservasEquipamentosIndexRoute
+  '/reservas/salas': typeof AuthenticatedReservasSalasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/base-conhecimento': typeof AuthenticatedBaseConhecimentoRoute
+  '/_authenticated/inventario': typeof AuthenticatedInventarioRoute
+  '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/admin/base-conhecimento-config': typeof AuthenticatedAdminBaseConhecimentoConfigRoute
+  '/_authenticated/admin/chamados-config': typeof AuthenticatedAdminChamadosConfigRoute
+  '/_authenticated/admin/departamentos': typeof AuthenticatedAdminDepartamentosRoute
+  '/_authenticated/admin/inventario-config': typeof AuthenticatedAdminInventarioConfigRoute
+  '/_authenticated/admin/reservas-config': typeof AuthenticatedAdminReservasConfigRoute
+  '/_authenticated/admin/toners': typeof AuthenticatedAdminTonersRoute
+  '/_authenticated/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
+  '/_authenticated/chamados/$id': typeof AuthenticatedChamadosIdRoute
+  '/_authenticated/chamados/novo': typeof AuthenticatedChamadosNovoRoute
+  '/_authenticated/tarefas/historico': typeof AuthenticatedTarefasHistoricoRoute
+  '/_authenticated/chamados/': typeof AuthenticatedChamadosIndexRoute
+  '/_authenticated/tarefas/': typeof AuthenticatedTarefasIndexRoute
+  '/_authenticated/reservas/equipamentos/$id': typeof AuthenticatedReservasEquipamentosIdRoute
+  '/_authenticated/reservas/salas/$id': typeof AuthenticatedReservasSalasIdRoute
+  '/api/public/hooks/push-dispatch': typeof ApiPublicHooksPushDispatchRoute
+  '/_authenticated/reservas/equipamentos/': typeof AuthenticatedReservasEquipamentosIndexRoute
+  '/_authenticated/reservas/salas/': typeof AuthenticatedReservasSalasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/base-conhecimento'
+    | '/inventario'
+    | '/perfil'
+    | '/admin/base-conhecimento-config'
+    | '/admin/chamados-config'
+    | '/admin/departamentos'
+    | '/admin/inventario-config'
+    | '/admin/reservas-config'
+    | '/admin/toners'
+    | '/admin/usuarios'
+    | '/chamados/$id'
+    | '/chamados/novo'
+    | '/tarefas/historico'
+    | '/chamados/'
+    | '/tarefas/'
+    | '/reservas/equipamentos/$id'
+    | '/reservas/salas/$id'
+    | '/api/public/hooks/push-dispatch'
+    | '/reservas/equipamentos/'
+    | '/reservas/salas/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/auth'
+    | '/reset-password'
+    | '/base-conhecimento'
+    | '/inventario'
+    | '/perfil'
+    | '/'
+    | '/admin/base-conhecimento-config'
+    | '/admin/chamados-config'
+    | '/admin/departamentos'
+    | '/admin/inventario-config'
+    | '/admin/reservas-config'
+    | '/admin/toners'
+    | '/admin/usuarios'
+    | '/chamados/$id'
+    | '/chamados/novo'
+    | '/tarefas/historico'
+    | '/chamados'
+    | '/tarefas'
+    | '/reservas/equipamentos/$id'
+    | '/reservas/salas/$id'
+    | '/api/public/hooks/push-dispatch'
+    | '/reservas/equipamentos'
+    | '/reservas/salas'
+  id:
+    | '__root__'
+    | '/_authenticated'
+    | '/auth'
+    | '/reset-password'
+    | '/_authenticated/base-conhecimento'
+    | '/_authenticated/inventario'
+    | '/_authenticated/perfil'
+    | '/_authenticated/'
+    | '/_authenticated/admin/base-conhecimento-config'
+    | '/_authenticated/admin/chamados-config'
+    | '/_authenticated/admin/departamentos'
+    | '/_authenticated/admin/inventario-config'
+    | '/_authenticated/admin/reservas-config'
+    | '/_authenticated/admin/toners'
+    | '/_authenticated/admin/usuarios'
+    | '/_authenticated/chamados/$id'
+    | '/_authenticated/chamados/novo'
+    | '/_authenticated/tarefas/historico'
+    | '/_authenticated/chamados/'
+    | '/_authenticated/tarefas/'
+    | '/_authenticated/reservas/equipamentos/$id'
+    | '/_authenticated/reservas/salas/$id'
+    | '/api/public/hooks/push-dispatch'
+    | '/_authenticated/reservas/equipamentos/'
+    | '/_authenticated/reservas/salas/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  ApiPublicHooksPushDispatchRoute: typeof ApiPublicHooksPushDispatchRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/': {
+      id: '/_authenticated/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/perfil': {
+      id: '/_authenticated/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof AuthenticatedPerfilRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/inventario': {
+      id: '/_authenticated/inventario'
+      path: '/inventario'
+      fullPath: '/inventario'
+      preLoaderRoute: typeof AuthenticatedInventarioRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/base-conhecimento': {
+      id: '/_authenticated/base-conhecimento'
+      path: '/base-conhecimento'
+      fullPath: '/base-conhecimento'
+      preLoaderRoute: typeof AuthenticatedBaseConhecimentoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tarefas/': {
+      id: '/_authenticated/tarefas/'
+      path: '/tarefas'
+      fullPath: '/tarefas/'
+      preLoaderRoute: typeof AuthenticatedTarefasIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/chamados/': {
+      id: '/_authenticated/chamados/'
+      path: '/chamados'
+      fullPath: '/chamados/'
+      preLoaderRoute: typeof AuthenticatedChamadosIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tarefas/historico': {
+      id: '/_authenticated/tarefas/historico'
+      path: '/tarefas/historico'
+      fullPath: '/tarefas/historico'
+      preLoaderRoute: typeof AuthenticatedTarefasHistoricoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/chamados/novo': {
+      id: '/_authenticated/chamados/novo'
+      path: '/chamados/novo'
+      fullPath: '/chamados/novo'
+      preLoaderRoute: typeof AuthenticatedChamadosNovoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/chamados/$id': {
+      id: '/_authenticated/chamados/$id'
+      path: '/chamados/$id'
+      fullPath: '/chamados/$id'
+      preLoaderRoute: typeof AuthenticatedChamadosIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/usuarios': {
+      id: '/_authenticated/admin/usuarios'
+      path: '/admin/usuarios'
+      fullPath: '/admin/usuarios'
+      preLoaderRoute: typeof AuthenticatedAdminUsuariosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/toners': {
+      id: '/_authenticated/admin/toners'
+      path: '/admin/toners'
+      fullPath: '/admin/toners'
+      preLoaderRoute: typeof AuthenticatedAdminTonersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/reservas-config': {
+      id: '/_authenticated/admin/reservas-config'
+      path: '/admin/reservas-config'
+      fullPath: '/admin/reservas-config'
+      preLoaderRoute: typeof AuthenticatedAdminReservasConfigRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/inventario-config': {
+      id: '/_authenticated/admin/inventario-config'
+      path: '/admin/inventario-config'
+      fullPath: '/admin/inventario-config'
+      preLoaderRoute: typeof AuthenticatedAdminInventarioConfigRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/departamentos': {
+      id: '/_authenticated/admin/departamentos'
+      path: '/admin/departamentos'
+      fullPath: '/admin/departamentos'
+      preLoaderRoute: typeof AuthenticatedAdminDepartamentosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/chamados-config': {
+      id: '/_authenticated/admin/chamados-config'
+      path: '/admin/chamados-config'
+      fullPath: '/admin/chamados-config'
+      preLoaderRoute: typeof AuthenticatedAdminChamadosConfigRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/base-conhecimento-config': {
+      id: '/_authenticated/admin/base-conhecimento-config'
+      path: '/admin/base-conhecimento-config'
+      fullPath: '/admin/base-conhecimento-config'
+      preLoaderRoute: typeof AuthenticatedAdminBaseConhecimentoConfigRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reservas/salas/': {
+      id: '/_authenticated/reservas/salas/'
+      path: '/reservas/salas'
+      fullPath: '/reservas/salas/'
+      preLoaderRoute: typeof AuthenticatedReservasSalasIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reservas/equipamentos/': {
+      id: '/_authenticated/reservas/equipamentos/'
+      path: '/reservas/equipamentos'
+      fullPath: '/reservas/equipamentos/'
+      preLoaderRoute: typeof AuthenticatedReservasEquipamentosIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/public/hooks/push-dispatch': {
+      id: '/api/public/hooks/push-dispatch'
+      path: '/api/public/hooks/push-dispatch'
+      fullPath: '/api/public/hooks/push-dispatch'
+      preLoaderRoute: typeof ApiPublicHooksPushDispatchRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/reservas/salas/$id': {
+      id: '/_authenticated/reservas/salas/$id'
+      path: '/reservas/salas/$id'
+      fullPath: '/reservas/salas/$id'
+      preLoaderRoute: typeof AuthenticatedReservasSalasIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reservas/equipamentos/$id': {
+      id: '/_authenticated/reservas/equipamentos/$id'
+      path: '/reservas/equipamentos/$id'
+      fullPath: '/reservas/equipamentos/$id'
+      preLoaderRoute: typeof AuthenticatedReservasEquipamentosIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBaseConhecimentoRoute: typeof AuthenticatedBaseConhecimentoRoute
+  AuthenticatedInventarioRoute: typeof AuthenticatedInventarioRoute
+  AuthenticatedPerfilRoute: typeof AuthenticatedPerfilRoute
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedAdminBaseConhecimentoConfigRoute: typeof AuthenticatedAdminBaseConhecimentoConfigRoute
+  AuthenticatedAdminChamadosConfigRoute: typeof AuthenticatedAdminChamadosConfigRoute
+  AuthenticatedAdminDepartamentosRoute: typeof AuthenticatedAdminDepartamentosRoute
+  AuthenticatedAdminInventarioConfigRoute: typeof AuthenticatedAdminInventarioConfigRoute
+  AuthenticatedAdminReservasConfigRoute: typeof AuthenticatedAdminReservasConfigRoute
+  AuthenticatedAdminTonersRoute: typeof AuthenticatedAdminTonersRoute
+  AuthenticatedAdminUsuariosRoute: typeof AuthenticatedAdminUsuariosRoute
+  AuthenticatedChamadosIdRoute: typeof AuthenticatedChamadosIdRoute
+  AuthenticatedChamadosNovoRoute: typeof AuthenticatedChamadosNovoRoute
+  AuthenticatedTarefasHistoricoRoute: typeof AuthenticatedTarefasHistoricoRoute
+  AuthenticatedChamadosIndexRoute: typeof AuthenticatedChamadosIndexRoute
+  AuthenticatedTarefasIndexRoute: typeof AuthenticatedTarefasIndexRoute
+  AuthenticatedReservasEquipamentosIdRoute: typeof AuthenticatedReservasEquipamentosIdRoute
+  AuthenticatedReservasSalasIdRoute: typeof AuthenticatedReservasSalasIdRoute
+  AuthenticatedReservasEquipamentosIndexRoute: typeof AuthenticatedReservasEquipamentosIndexRoute
+  AuthenticatedReservasSalasIndexRoute: typeof AuthenticatedReservasSalasIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBaseConhecimentoRoute: AuthenticatedBaseConhecimentoRoute,
+  AuthenticatedInventarioRoute: AuthenticatedInventarioRoute,
+  AuthenticatedPerfilRoute: AuthenticatedPerfilRoute,
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedAdminBaseConhecimentoConfigRoute:
+    AuthenticatedAdminBaseConhecimentoConfigRoute,
+  AuthenticatedAdminChamadosConfigRoute: AuthenticatedAdminChamadosConfigRoute,
+  AuthenticatedAdminDepartamentosRoute: AuthenticatedAdminDepartamentosRoute,
+  AuthenticatedAdminInventarioConfigRoute:
+    AuthenticatedAdminInventarioConfigRoute,
+  AuthenticatedAdminReservasConfigRoute: AuthenticatedAdminReservasConfigRoute,
+  AuthenticatedAdminTonersRoute: AuthenticatedAdminTonersRoute,
+  AuthenticatedAdminUsuariosRoute: AuthenticatedAdminUsuariosRoute,
+  AuthenticatedChamadosIdRoute: AuthenticatedChamadosIdRoute,
+  AuthenticatedChamadosNovoRoute: AuthenticatedChamadosNovoRoute,
+  AuthenticatedTarefasHistoricoRoute: AuthenticatedTarefasHistoricoRoute,
+  AuthenticatedChamadosIndexRoute: AuthenticatedChamadosIndexRoute,
+  AuthenticatedTarefasIndexRoute: AuthenticatedTarefasIndexRoute,
+  AuthenticatedReservasEquipamentosIdRoute:
+    AuthenticatedReservasEquipamentosIdRoute,
+  AuthenticatedReservasSalasIdRoute: AuthenticatedReservasSalasIdRoute,
+  AuthenticatedReservasEquipamentosIndexRoute:
+    AuthenticatedReservasEquipamentosIndexRoute,
+  AuthenticatedReservasSalasIndexRoute: AuthenticatedReservasSalasIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  ApiPublicHooksPushDispatchRoute: ApiPublicHooksPushDispatchRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

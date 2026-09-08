@@ -1,0 +1,2 @@
+ALTER TABLE public.reservations ADD COLUMN IF NOT EXISTS parent_reservation_id uuid REFERENCES public.reservations(id) ON DELETE CASCADE;
+CREATE INDEX IF NOT EXISTS reservations_parent_idx ON public.reservations(parent_reservation_id);
