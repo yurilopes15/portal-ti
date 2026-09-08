@@ -883,6 +883,83 @@ export type Database = {
           },
         ]
       }
+      role_permissions: {
+        Row: {
+          can_create: boolean
+          can_delete: boolean
+          can_edit: boolean
+          can_view: boolean
+          created_at: string
+          id: string
+          module: string
+          role_id: string
+          updated_at: string
+        }
+        Insert: {
+          can_create?: boolean
+          can_delete?: boolean
+          can_edit?: boolean
+          can_view?: boolean
+          created_at?: string
+          id?: string
+          module: string
+          role_id: string
+          updated_at?: string
+        }
+        Update: {
+          can_create?: boolean
+          can_delete?: boolean
+          can_edit?: boolean
+          can_view?: boolean
+          created_at?: string
+          id?: string
+          module?: string
+          role_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "role_permissions_role_id_fkey"
+            columns: ["role_id"]
+            isOneToOne: false
+            referencedRelation: "roles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      roles: {
+        Row: {
+          base_role: Database["public"]["Enums"]["app_role"]
+          created_at: string
+          descricao: string | null
+          id: string
+          is_system: boolean
+          nome: string
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          base_role?: Database["public"]["Enums"]["app_role"]
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          is_system?: boolean
+          nome: string
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          base_role?: Database["public"]["Enums"]["app_role"]
+          created_at?: string
+          descricao?: string | null
+          id?: string
+          is_system?: boolean
+          nome?: string
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       room_reservations: {
         Row: {
           assunto: string
@@ -1594,21 +1671,32 @@ export type Database = {
           created_at: string
           id: string
           role: Database["public"]["Enums"]["app_role"]
+          role_id: string | null
           user_id: string
         }
         Insert: {
           created_at?: string
           id?: string
           role: Database["public"]["Enums"]["app_role"]
+          role_id?: string | null
           user_id: string
         }
         Update: {
           created_at?: string
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
+          role_id?: string | null
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_role_id_fkey"
+            columns: ["role_id"]
+            isOneToOne: false
+            referencedRelation: "roles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
