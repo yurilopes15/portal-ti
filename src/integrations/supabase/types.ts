@@ -1552,7 +1552,32 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      current_department_id: { Args: never; Returns: string }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_ti: { Args: { _user_id: string }; Returns: boolean }
+      log_admin_action: {
+        Args: {
+          _action: string
+          _entity_id: string
+          _entity_type: string
+          _metadata?: Json
+        }
+        Returns: undefined
+      }
+      restore_entity: {
+        Args: { _entity_id: string; _entity_type: string }
+        Returns: undefined
+      }
+      soft_delete_entity: {
+        Args: { _entity_id: string; _entity_type: string; _metadata?: Json }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "usuario" | "tecnico" | "admin" | "kanban"
