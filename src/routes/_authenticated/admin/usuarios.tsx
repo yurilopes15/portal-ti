@@ -30,7 +30,7 @@ import {
   resetUserPassword,
   updateUserProfile,
 } from "@/lib/admin-users.functions";
-import { ROLE_LABELS, type RoleKey } from "@/lib/format";
+import { useRoles } from "@/hooks/use-roles";
 import { ConfirmDeleteDialog } from "@/components/confirm-delete-dialog";
 
 export const Route = createFileRoute("/_authenticated/admin/usuarios")({
@@ -49,7 +49,9 @@ function AdminUsuarios() {
   const updateProfileFn = useServerFn(updateUserProfile);
 
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ email: "", nome: "", departamento: "", telefone: "", password: "", role: "usuario" as RoleKey });
+  const { data: roles = [] } = useRoles();
+  const defaultRoleId = roles.find((r) => r.slug === "usuario")?.id ?? "";
+  const [form, setForm] = useState({ email: "", nome: "", departamento: "", telefone: "", password: "", role_id: "" });
   const [loading, setLoading] = useState(false);
 
   const [editDept, setEditDept] = useState<{ id: string; nome: string; value: string } | null>(null);
@@ -58,7 +60,7 @@ function AdminUsuarios() {
   const [editSaving, setEditSaving] = useState(false);
 
   const [q, setQ] = useState("");
-  const [roleFilter, setRoleFilter] = useState<"todos" | RoleKey>("todos");
+  const [roleFilter, setRoleFilter] = useState<string>("todos");
   const [statusFilter, setStatusFilter] = useState<"todos" | "ativos" | "inativos">("todos");
   const [deptFilter, setDeptFilter] = useState<string>("todos");
   const [sortBy, setSortBy] = useState<"nome-asc" | "nome-desc" | "email-asc" | "email-desc" | "recentes" | "antigos">("nome-asc");
@@ -68,10 +70,10 @@ function AdminUsuarios() {
     queryKey: ["admin-users"],
     queryFn: async () => {
       const { data: profiles } = await supabase.from("profiles").select("*").order("nome");
-      const { data: roles } = await supabase.from("user_roles").select("user_id, role");
-      const roleMap = new Map<string, RoleKey>();
-      (roles ?? []).forEach((r) => roleMap.set(r.user_id, r.role as RoleKey));
-      return (profiles ?? []).map((p) => ({ ...p, role: roleMap.get(p.id) ?? "usuario" }));
+      const { data: userRoles } = await supabase.from("user_roles").select("user_id, role, role_id");
+      const roleMap = new Map<string, string | null>();
+      (userRoles ?? []).forEach((r: any) => roleMap.set(r.user_id, r.role_id ?? null));
+      return (profiles ?? []).map((p) => ({ ...p, role_id: roleMap.get(p.id) ?? null }));
     },
   });
 
@@ -87,7 +89,7 @@ function AdminUsuarios() {
   const filteredUsers = useMemo(() => {
     const term = q.trim().toLowerCase();
     const list = (users as any[]).filter((u) => {
-      if (roleFilter !== "todos" && u.role !== roleFilter) return false;
+      if (roleFilter !== "todos" && u.role_id !== roleFilter) return false;
       if (statusFilter === "ativos" && !u.ativo) return false;
       if (statusFilter === "inativos" && u.ativo) return false;
       if (deptFilter !== "todos") {
@@ -136,10 +138,10 @@ function AdminUsuarios() {
   async function submit() {
     setLoading(true);
     try {
-      await createFn({ data: form });
+      await createFn({ data: { ...form, role_id: form.role_id || defaultRoleId } });
       toast.success("Usuário criado");
       setOpen(false);
-      setForm({ email: "", nome: "", departamento: "", telefone: "", password: "", role: "usuario" });
+      setForm({ email: "", nome: "", departamento: "", telefone: "", password: "", role_id: "" });
       invalidate();
     } catch (e: any) {
       toast.error(e.message ?? "Erro ao criar usuário");
@@ -148,9 +150,9 @@ function AdminUsuarios() {
     }
   }
 
-  async function changeRole(user_id: string, role: RoleKey) {
+  async function changeRole(user_id: string, role_id: string) {
     try {
-      await setRoleFn({ data: { user_id, role } });
+      await setRoleFn({ data: { user_id, role_id } });
       toast.success("Perfil atualizado");
       invalidate();
     } catch (e: any) { toast.error(e.message); }
@@ -236,10 +238,10 @@ function AdminUsuarios() {
                 <div className="space-y-1"><Label>Telefone</Label><Input value={form.telefone} onChange={(e) => setForm({ ...form, telefone: e.target.value })} /></div>
                 <div className="space-y-1"><Label>Senha inicial *</Label><Input type="text" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="Mín. 8 caracteres" /></div>
                 <div className="space-y-1"><Label>Perfil</Label>
-                  <Select value={form.role} onValueChange={(v) => setForm({ ...form, role: v as RoleKey })}>
+                  <Select value={form.role_id || defaultRoleId} onValueChange={(v) => setForm({ ...form, role_id: v })}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
-                      {Object.entries(ROLE_LABELS).map(([k, v]) => <SelectItem key={k} value={k}>{v}</SelectItem>)}
+                      {roles.map((r) => <SelectItem key={r.id} value={r.id}>{r.nome}</SelectItem>)}
                     </SelectContent>
                   </Select>
                 </div>
@@ -264,7 +266,7 @@ function AdminUsuarios() {
             <SelectTrigger><SelectValue placeholder="Perfil" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="todos">Todos os perfis</SelectItem>
-              {Object.entries(ROLE_LABELS).map(([k, v]) => <SelectItem key={k} value={k}>{v}</SelectItem>)}
+              {roles.map((r) => <SelectItem key={r.id} value={r.id}>{r.nome}</SelectItem>)}
             </SelectContent>
           </Select>
           <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as any)}>
@@ -343,10 +345,10 @@ function AdminUsuarios() {
                     </button>
                   </td>
                   <td className="px-4 py-2 w-44">
-                    <Select value={u.role} onValueChange={(v) => changeRole(u.id, v as RoleKey)}>
+                    <Select value={u.role_id ?? defaultRoleId} onValueChange={(v) => changeRole(u.id, v)}>
                       <SelectTrigger className="h-8"><SelectValue /></SelectTrigger>
                       <SelectContent>
-                        {Object.entries(ROLE_LABELS).map(([k, v]) => <SelectItem key={k} value={k}>{v}</SelectItem>)}
+                        {roles.map((r) => <SelectItem key={r.id} value={r.id}>{r.nome}</SelectItem>)}
                       </SelectContent>
                     </Select>
                   </td>

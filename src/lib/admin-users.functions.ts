@@ -27,13 +27,23 @@ async function logAction(
   });
 }
 
+async function resolveRole(supabaseAdmin: any, roleId: string) {
+  const { data } = await supabaseAdmin
+    .from("roles")
+    .select("id, base_role")
+    .eq("id", roleId)
+    .maybeSingle();
+  if (!data) throw new Error("Perfil não encontrado.");
+  return data as { id: string; base_role: "usuario" | "tecnico" | "admin" };
+}
+
 const createSchema = z.object({
   email: z.string().email(),
   nome: z.string().min(2).max(120),
   departamento: z.string().max(80).optional().nullable(),
   telefone: z.string().max(40).optional().nullable(),
   password: z.string().min(8).max(72),
-  role: z.enum(["usuario", "tecnico", "admin", "kanban"]),
+  role_id: z.string().uuid(),
 });
 
 export const createUser = createServerFn({ method: "POST" })
@@ -42,6 +52,7 @@ export const createUser = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await ensureAdmin(context);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const role = await resolveRole(supabaseAdmin, data.role_id);
     const { data: created, error } = await supabaseAdmin.auth.admin.createUser({
       email: data.email,
       password: data.password,
@@ -50,16 +61,21 @@ export const createUser = createServerFn({ method: "POST" })
         nome: data.nome,
         departamento: data.departamento,
         telefone: data.telefone,
-        role: data.role,
+        role: role.base_role,
       },
     });
     if (error) throw new Error(error.message);
 
     if (created.user) {
+      await supabaseAdmin.from("user_roles").delete().eq("user_id", created.user.id);
       await supabaseAdmin
         .from("user_roles")
-        .upsert({ user_id: created.user.id, role: data.role }, { onConflict: "user_id,role" });
-      await logAction(context, "create_user", created.user.id, { email: data.email, role: data.role });
+        .insert({ user_id: created.user.id, role: role.base_role, role_id: role.id });
+      await logAction(context, "create_user", created.user.id, {
+        email: data.email,
+        role: role.base_role,
+        role_id: role.id,
+      });
     }
 
     return { id: created.user?.id, email: created.user?.email };
@@ -67,7 +83,7 @@ export const createUser = createServerFn({ method: "POST" })
 
 const updateRoleSchema = z.object({
   user_id: z.string().uuid(),
-  role: z.enum(["usuario", "tecnico", "admin", "kanban"]),
+  role_id: z.string().uuid(),
 });
 
 export const setUserRole = createServerFn({ method: "POST" })
@@ -76,9 +92,15 @@ export const setUserRole = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     await ensureAdmin(context);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const role = await resolveRole(supabaseAdmin, data.role_id);
     await supabaseAdmin.from("user_roles").delete().eq("user_id", data.user_id);
-    await supabaseAdmin.from("user_roles").insert({ user_id: data.user_id, role: data.role });
-    await logAction(context, "update_role", data.user_id, { role: data.role });
+    await supabaseAdmin
+      .from("user_roles")
+      .insert({ user_id: data.user_id, role: role.base_role, role_id: role.id });
+    await logAction(context, "update_role", data.user_id, {
+      role: role.base_role,
+      role_id: role.id,
+    });
     return { ok: true };
   });
 
