@@ -14,6 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
+      app_branding: {
+        Row: {
+          accent_color: string
+          app_name: string
+          company_name: string
+          created_at: string
+          favicon_url: string | null
+          id: boolean
+          login_bg_color: string | null
+          login_bg_image_url: string | null
+          login_logo_url: string | null
+          login_subtitle: string
+          login_title: string
+          primary_color: string
+          primary_foreground_color: string
+          radius: string
+          sidebar_color: string | null
+          sidebar_logo_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          accent_color?: string
+          app_name?: string
+          company_name?: string
+          created_at?: string
+          favicon_url?: string | null
+          id?: boolean
+          login_bg_color?: string | null
+          login_bg_image_url?: string | null
+          login_logo_url?: string | null
+          login_subtitle?: string
+          login_title?: string
+          primary_color?: string
+          primary_foreground_color?: string
+          radius?: string
+          sidebar_color?: string | null
+          sidebar_logo_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          accent_color?: string
+          app_name?: string
+          company_name?: string
+          created_at?: string
+          favicon_url?: string | null
+          id?: boolean
+          login_bg_color?: string | null
+          login_bg_image_url?: string | null
+          login_logo_url?: string | null
+          login_subtitle?: string
+          login_title?: string
+          primary_color?: string
+          primary_foreground_color?: string
+          radius?: string
+          sidebar_color?: string | null
+          sidebar_logo_url?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       audit_log: {
         Row: {
           action: string
