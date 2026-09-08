@@ -27,13 +27,23 @@ async function logAction(
   });
 }
 
+async function resolveRole(supabaseAdmin: any, roleId: string) {
+  const { data } = await supabaseAdmin
+    .from("roles")
+    .select("id, base_role")
+    .eq("id", roleId)
+    .maybeSingle();
+  if (!data) throw new Error("Perfil não encontrado.");
+  return data as { id: string; base_role: "usuario" | "tecnico" | "admin" };
+}
+
 const createSchema = z.object({
   email: z.string().email(),
   nome: z.string().min(2).max(120),
   departamento: z.string().max(80).optional().nullable(),
   telefone: z.string().max(40).optional().nullable(),
   password: z.string().min(8).max(72),
-  role: z.enum(["usuario", "tecnico", "admin", "kanban"]),
+  role_id: z.string().uuid(),
 });
 
 export const createUser = createServerFn({ method: "POST" })
