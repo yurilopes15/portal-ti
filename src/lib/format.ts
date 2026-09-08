@@ -31,7 +31,6 @@ export const ROLE_LABELS = {
   usuario: "Usuário",
   tecnico: "Técnico de TI",
   admin: "Administrador",
-  kanban: "Kanban",
 } as const;
 
 export type StatusKey = keyof typeof STATUS_LABELS;
