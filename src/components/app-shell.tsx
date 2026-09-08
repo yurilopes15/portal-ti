@@ -22,7 +22,7 @@ import {
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { LayoutDashboard, Ticket, Package, BookOpen, Users, LogOut, UserCog, Settings, ChevronRight, Monitor, Printer, Phone, Network, Smartphone, Laptop, CalendarDays, Building2, Wrench, KeyRound, ListChecks, History as HistoryIcon } from "lucide-react";
 import { INVENTORY_GROUPS, INVENTORY_GROUP_KEYS, type InventoryGroupKey } from "@/lib/inventory-groups";
-import slotterLogo from "@/assets/slotter-logo.png.asset.json";
+import { useBranding } from "@/hooks/use-branding";
 import { useAuth, useIsTI, useIsAdmin, useProfile } from "@/hooks/use-auth";
 import { usePermissions } from "@/hooks/use-permissions";
 import { supabase } from "@/integrations/supabase/client";
@@ -58,6 +58,7 @@ type ConfigChild = { title: string; url?: string; hash?: string; soon?: boolean 
 type ConfigSection = { title: string; children: ConfigChild[] };
 
 function AppSidebar() {
+  const { branding } = useBranding();
   const isTI = useIsTI();
   const isAdmin = useIsAdmin();
   const { canUseTarefas } = usePermissions();
@@ -135,6 +136,10 @@ function AppSidebar() {
       children: [{ title: "Departamentos", url: "/admin/departamentos" }],
     },
     {
+      title: "Aparência",
+      children: [{ title: "Personalização", url: "/admin/personalizacao" }],
+    },
+    {
       title: "Segurança",
       children: [
         { title: "Perfis", soon: true },
@@ -154,11 +159,13 @@ function AppSidebar() {
       <SidebarHeader className="border-b border-sidebar-border px-4 py-4">
         <div className="flex items-center gap-2">
           <div className="h-9 w-9 rounded-md bg-white flex items-center justify-center shrink-0 overflow-hidden">
-            <img src={slotterLogo.url} alt="Slotter" className="h-7 w-7 object-contain" />
+            {branding.sidebar_logo_url && (
+              <img src={branding.sidebar_logo_url} alt={branding.company_name} className="h-7 w-7 object-contain" />
+            )}
           </div>
           <div className="group-data-[collapsible=icon]:hidden">
-            <div className="text-sm font-semibold text-sidebar-foreground leading-tight">Portal TI</div>
-            <div className="text-[11px] text-sidebar-foreground/60 leading-tight">Slotter</div>
+            <div className="text-sm font-semibold text-sidebar-foreground leading-tight">{branding.app_name}</div>
+            <div className="text-[11px] text-sidebar-foreground/60 leading-tight">{branding.company_name}</div>
           </div>
         </div>
       </SidebarHeader>
