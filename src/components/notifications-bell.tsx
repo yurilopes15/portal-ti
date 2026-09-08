@@ -36,16 +36,18 @@ export function NotificationsBell() {
     },
   });
 
+  const userId = user?.id;
   useEffect(() => {
-    if (!user) return;
+    if (!userId) return;
     const ch = supabase
-      .channel("notif-" + user.id)
-      .on("postgres_changes", { event: "*", schema: "public", table: "notifications", filter: `user_id=eq.${user.id}` }, () => {
-        qc.invalidateQueries({ queryKey: ["notifications", user.id] });
+      .channel(`notif-${userId}-${Math.random().toString(36).slice(2)}`)
+      .on("postgres_changes", { event: "*", schema: "public", table: "notifications", filter: `user_id=eq.${userId}` }, () => {
+        qc.invalidateQueries({ queryKey: ["notifications", userId] });
       })
       .subscribe();
     return () => { supabase.removeChannel(ch); };
-  }, [user, qc]);
+  }, [userId, qc]);
+
 
   const unread = items.filter((n) => !n.lida).length;
 
