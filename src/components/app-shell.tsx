@@ -142,8 +142,8 @@ function AppSidebar() {
     {
       title: "Segurança",
       children: [
-        { title: "Perfis", soon: true },
-        { title: "Permissões", soon: true },
+        { title: "Perfis", url: "/admin/seguranca", hash: "perfis" },
+        { title: "Permissões", url: "/admin/seguranca", hash: "permissoes" },
         { title: "Regras de Acesso", soon: true },
       ],
     },
