@@ -24,7 +24,7 @@ export function useAuth() {
   return { user, session, loading };
 }
 
-export type AppRole = "usuario" | "tecnico" | "admin" | "kanban";
+export type AppRole = "usuario" | "tecnico" | "admin";
 
 export function useUserRole() {
   const { user } = useAuth();
