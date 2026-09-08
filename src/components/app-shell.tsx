@@ -358,6 +358,24 @@ function AppSidebar() {
             </SidebarGroupContent>
           </SidebarGroup>
         )}
+
+        {isTI && !isAdmin && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Configurações</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild isActive={isActive("/admin/personalizacao")} tooltip="Personalização">
+                    <Link to="/admin/personalizacao">
+                      <Settings className="h-4 w-4" />
+                      <span>Personalização</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
       </SidebarContent>
       <SidebarFooter className="border-t border-sidebar-border p-2 group-data-[collapsible=icon]:hidden" />
 
