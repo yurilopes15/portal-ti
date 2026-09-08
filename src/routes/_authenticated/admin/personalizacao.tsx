@@ -260,6 +260,11 @@ function PersonalizacaoPage() {
                   />
                   <ColorField label="Cor de destaque" value={form.accent_color} onChange={(v) => set("accent_color", v)} />
                   <ColorField
+                    label="Cor do texto do destaque"
+                    value={form.accent_foreground_color}
+                    onChange={(v) => set("accent_foreground_color", v)}
+                  />
+                  <ColorField
                     label="Cor do menu lateral"
                     value={form.sidebar_color ?? "#ffffff"}
                     onChange={(v) => set("sidebar_color", v)}
