@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-import slotterLogo from "@/assets/slotter-logo.png.asset.json";
+import { useBranding } from "@/hooks/use-branding";
 import { bootstrapFirstAdmin, hasAnyAdmin } from "@/lib/bootstrap.functions";
 
 export const Route = createFileRoute("/auth")({
@@ -22,6 +22,7 @@ export const Route = createFileRoute("/auth")({
 });
 
 function AuthPage() {
+  const { branding } = useBranding();
   const nav = useNavigate();
   const bootstrapFn = useServerFn(bootstrapFirstAdmin);
   const hasAdminFn = useServerFn(hasAnyAdmin);
@@ -55,7 +56,7 @@ function AuthPage() {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) return toast.error("Falha no login: " + error.message);
-    toast.success("Bem-vindo ao Portal TI Slotter");
+    toast.success(`Bem-vindo ao ${branding.login_title}`);
     nav({ to: "/" });
   }
 
@@ -72,17 +73,25 @@ function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-background via-secondary to-accent p-4">
+    <div
+      className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-background via-secondary to-accent p-4 bg-cover bg-center"
+      style={{
+        backgroundColor: branding.login_bg_color ?? undefined,
+        backgroundImage: branding.login_bg_image_url ? `url(${branding.login_bg_image_url})` : undefined,
+      }}
+    >
       <div className="w-full max-w-md">
         <div className="flex flex-col items-center justify-center gap-3 mb-8">
-          <img
-            src={slotterLogo.url}
-            alt="Slotter"
-            className="h-16 w-16 rounded-lg object-contain"
-          />
+          {branding.login_logo_url && (
+            <img
+              src={branding.login_logo_url}
+              alt={branding.company_name}
+              className="h-16 w-16 rounded-lg object-contain"
+            />
+          )}
           <div className="text-center">
-            <h1 className="text-2xl font-bold tracking-tight">Portal TI Slotter</h1>
-            <p className="text-xs text-muted-foreground">Central de Atendimento de TI</p>
+            <h1 className="text-2xl font-bold tracking-tight">{branding.login_title}</h1>
+            <p className="text-xs text-muted-foreground">{branding.login_subtitle}</p>
           </div>
         </div>
 
