@@ -17,6 +17,7 @@ export type Database = {
       app_branding: {
         Row: {
           accent_color: string
+          accent_foreground_color: string
           app_name: string
           company_name: string
           created_at: string
@@ -36,6 +37,7 @@ export type Database = {
         }
         Insert: {
           accent_color?: string
+          accent_foreground_color?: string
           app_name?: string
           company_name?: string
           created_at?: string
@@ -55,6 +57,7 @@ export type Database = {
         }
         Update: {
           accent_color?: string
+          accent_foreground_color?: string
           app_name?: string
           company_name?: string
           created_at?: string

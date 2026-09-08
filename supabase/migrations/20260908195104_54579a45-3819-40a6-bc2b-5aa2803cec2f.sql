@@ -1,0 +1,1 @@
+ALTER TABLE public.app_branding ADD COLUMN IF NOT EXISTS accent_foreground_color text NOT NULL DEFAULT '#14532d';

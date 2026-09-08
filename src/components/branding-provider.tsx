@@ -13,7 +13,7 @@ export function applyBrandingVars(b: Branding, target?: HTMLElement) {
   set("--primary-foreground", b.primary_foreground_color);
   set("--primary-hover", `color-mix(in srgb, ${p} 85%, black)`);
   set("--accent", b.accent_color);
-  set("--accent-foreground", `color-mix(in srgb, ${p} 80%, black)`);
+  set("--accent-foreground", b.accent_foreground_color);
   set("--ring", p);
 
   // Tons derivados da cor principal (evita resquícios da cor padrão)

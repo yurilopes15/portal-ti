@@ -15,6 +15,7 @@ export type Branding = {
   primary_color: string;
   primary_foreground_color: string;
   accent_color: string;
+  accent_foreground_color: string;
   sidebar_color: string | null;
   radius: string;
 };
@@ -32,12 +33,13 @@ export const DEFAULT_BRANDING: Branding = {
   primary_color: "#22a06b",
   primary_foreground_color: "#ffffff",
   accent_color: "#d9f2e5",
+  accent_foreground_color: "#14532d",
   sidebar_color: null,
   radius: "0.5rem",
 };
 
 const COLUMNS =
-  "app_name, company_name, sidebar_logo_url, login_logo_url, favicon_url, login_title, login_subtitle, login_bg_image_url, login_bg_color, primary_color, primary_foreground_color, accent_color, sidebar_color, radius";
+  "app_name, company_name, sidebar_logo_url, login_logo_url, favicon_url, login_title, login_subtitle, login_bg_image_url, login_bg_color, primary_color, primary_foreground_color, accent_color, accent_foreground_color, sidebar_color, radius";
 
 export const brandingKey = ["app-branding"] as const;
 
