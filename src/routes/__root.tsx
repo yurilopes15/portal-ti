@@ -17,6 +17,7 @@ import "@fontsource/inter/700.css";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { BrandingProvider } from "@/components/branding-provider";
 
 function NotFoundComponent() {
   return (
@@ -119,7 +120,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <BrandingProvider>
+        <Outlet />
+      </BrandingProvider>
       <Toaster richColors position="top-right" />
     </QueryClientProvider>
   );

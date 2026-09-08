@@ -24,6 +24,7 @@ import { Route as AuthenticatedChamadosIdRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminUsuariosRouteImport } from './routes/_authenticated/admin/usuarios'
 import { Route as AuthenticatedAdminTonersRouteImport } from './routes/_authenticated/admin/toners'
 import { Route as AuthenticatedAdminReservasConfigRouteImport } from './routes/_authenticated/admin/reservas-config'
+import { Route as AuthenticatedAdminPersonalizacaoRouteImport } from './routes/_authenticated/admin/personalizacao'
 import { Route as AuthenticatedAdminInventarioConfigRouteImport } from './routes/_authenticated/admin/inventario-config'
 import { Route as AuthenticatedAdminDepartamentosRouteImport } from './routes/_authenticated/admin/departamentos'
 import { Route as AuthenticatedAdminChamadosConfigRouteImport } from './routes/_authenticated/admin/chamados-config'
@@ -116,6 +117,12 @@ const AuthenticatedAdminReservasConfigRoute =
     path: '/admin/reservas-config',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminPersonalizacaoRoute =
+  AuthenticatedAdminPersonalizacaoRouteImport.update({
+    id: '/admin/personalizacao',
+    path: '/admin/personalizacao',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminInventarioConfigRoute =
   AuthenticatedAdminInventarioConfigRouteImport.update({
     id: '/admin/inventario-config',
@@ -182,6 +189,7 @@ export interface FileRoutesByFullPath {
   '/admin/chamados-config': typeof AuthenticatedAdminChamadosConfigRoute
   '/admin/departamentos': typeof AuthenticatedAdminDepartamentosRoute
   '/admin/inventario-config': typeof AuthenticatedAdminInventarioConfigRoute
+  '/admin/personalizacao': typeof AuthenticatedAdminPersonalizacaoRoute
   '/admin/reservas-config': typeof AuthenticatedAdminReservasConfigRoute
   '/admin/toners': typeof AuthenticatedAdminTonersRoute
   '/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
@@ -207,6 +215,7 @@ export interface FileRoutesByTo {
   '/admin/chamados-config': typeof AuthenticatedAdminChamadosConfigRoute
   '/admin/departamentos': typeof AuthenticatedAdminDepartamentosRoute
   '/admin/inventario-config': typeof AuthenticatedAdminInventarioConfigRoute
+  '/admin/personalizacao': typeof AuthenticatedAdminPersonalizacaoRoute
   '/admin/reservas-config': typeof AuthenticatedAdminReservasConfigRoute
   '/admin/toners': typeof AuthenticatedAdminTonersRoute
   '/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
@@ -234,6 +243,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/chamados-config': typeof AuthenticatedAdminChamadosConfigRoute
   '/_authenticated/admin/departamentos': typeof AuthenticatedAdminDepartamentosRoute
   '/_authenticated/admin/inventario-config': typeof AuthenticatedAdminInventarioConfigRoute
+  '/_authenticated/admin/personalizacao': typeof AuthenticatedAdminPersonalizacaoRoute
   '/_authenticated/admin/reservas-config': typeof AuthenticatedAdminReservasConfigRoute
   '/_authenticated/admin/toners': typeof AuthenticatedAdminTonersRoute
   '/_authenticated/admin/usuarios': typeof AuthenticatedAdminUsuariosRoute
@@ -261,6 +271,7 @@ export interface FileRouteTypes {
     | '/admin/chamados-config'
     | '/admin/departamentos'
     | '/admin/inventario-config'
+    | '/admin/personalizacao'
     | '/admin/reservas-config'
     | '/admin/toners'
     | '/admin/usuarios'
@@ -286,6 +297,7 @@ export interface FileRouteTypes {
     | '/admin/chamados-config'
     | '/admin/departamentos'
     | '/admin/inventario-config'
+    | '/admin/personalizacao'
     | '/admin/reservas-config'
     | '/admin/toners'
     | '/admin/usuarios'
@@ -312,6 +324,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/chamados-config'
     | '/_authenticated/admin/departamentos'
     | '/_authenticated/admin/inventario-config'
+    | '/_authenticated/admin/personalizacao'
     | '/_authenticated/admin/reservas-config'
     | '/_authenticated/admin/toners'
     | '/_authenticated/admin/usuarios'
@@ -441,6 +454,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminReservasConfigRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/personalizacao': {
+      id: '/_authenticated/admin/personalizacao'
+      path: '/admin/personalizacao'
+      fullPath: '/admin/personalizacao'
+      preLoaderRoute: typeof AuthenticatedAdminPersonalizacaoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/inventario-config': {
       id: '/_authenticated/admin/inventario-config'
       path: '/admin/inventario-config'
@@ -516,6 +536,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminChamadosConfigRoute: typeof AuthenticatedAdminChamadosConfigRoute
   AuthenticatedAdminDepartamentosRoute: typeof AuthenticatedAdminDepartamentosRoute
   AuthenticatedAdminInventarioConfigRoute: typeof AuthenticatedAdminInventarioConfigRoute
+  AuthenticatedAdminPersonalizacaoRoute: typeof AuthenticatedAdminPersonalizacaoRoute
   AuthenticatedAdminReservasConfigRoute: typeof AuthenticatedAdminReservasConfigRoute
   AuthenticatedAdminTonersRoute: typeof AuthenticatedAdminTonersRoute
   AuthenticatedAdminUsuariosRoute: typeof AuthenticatedAdminUsuariosRoute
@@ -541,6 +562,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminDepartamentosRoute: AuthenticatedAdminDepartamentosRoute,
   AuthenticatedAdminInventarioConfigRoute:
     AuthenticatedAdminInventarioConfigRoute,
+  AuthenticatedAdminPersonalizacaoRoute: AuthenticatedAdminPersonalizacaoRoute,
   AuthenticatedAdminReservasConfigRoute: AuthenticatedAdminReservasConfigRoute,
   AuthenticatedAdminTonersRoute: AuthenticatedAdminTonersRoute,
   AuthenticatedAdminUsuariosRoute: AuthenticatedAdminUsuariosRoute,
