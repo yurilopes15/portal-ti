@@ -63,15 +63,13 @@ function NovoChamado() {
     queryKey: ["toner-printers", profile?.departamento],
     enabled: isTonerCategory,
     queryFn: async () => {
-      // Todas as impressoras com toner vinculado
+      // Todas as impressoras com toner vinculado (consulta sem dados sigilosos)
       const { data: pts } = await (supabase as any)
         .from("printer_toner_links")
-        .select("inventory_item_id, inventory_items(id, patrimonio, fabricante, modelo, localizacao)");
-      const seen = new Map<string, any>();
-      (pts ?? []).forEach((r: any) => {
-        if (r.inventory_items && !seen.has(r.inventory_item_id)) seen.set(r.inventory_item_id, r.inventory_items);
-      });
-      const allPrinters = Array.from(seen.values());
+        .select("inventory_item_id");
+      const printerIds = new Set<string>((pts ?? []).map((r: any) => r.inventory_item_id));
+      const { data: safeItems } = await (supabase as any).rpc("inventory_safe");
+      const allPrinters = (safeItems ?? []).filter((i: any) => printerIds.has(i.id));
 
       const userDept = (profile?.departamento ?? "").trim();
       if (!userDept) return { printers: [] as any[], preferredId: null as string | null };
@@ -94,7 +92,7 @@ function NovoChamado() {
       // Filtra pelas impressoras cuja Localização = departamento do usuário OU que estejam vinculadas
       const norm = (s: string) => s.trim().toLowerCase();
       const filtered = allPrinters.filter(
-        (p) => (p.localizacao && norm(p.localizacao) === norm(userDept)) || linkedIds.has(p.id),
+        (p: any) => (p.localizacao && norm(p.localizacao) === norm(userDept)) || linkedIds.has(p.id),
       );
       return { printers: filtered, preferredId: filtered[0]?.id ?? null };
     },
