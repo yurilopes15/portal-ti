@@ -92,7 +92,7 @@ function NovoChamado() {
       // Filtra pelas impressoras cuja Localização = departamento do usuário OU que estejam vinculadas
       const norm = (s: string) => s.trim().toLowerCase();
       const filtered = allPrinters.filter(
-        (p) => (p.localizacao && norm(p.localizacao) === norm(userDept)) || linkedIds.has(p.id),
+        (p: any) => (p.localizacao && norm(p.localizacao) === norm(userDept)) || linkedIds.has(p.id),
       );
       return { printers: filtered, preferredId: filtered[0]?.id ?? null };
     },
