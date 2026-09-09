@@ -156,13 +156,11 @@ function ChamadoDetail() {
     queryKey: ["user-inventory", ticket?.criado_por],
     enabled: !!ticket?.criado_por,
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("inventory_items")
-        .select("*, categoria:inventory_categories(nome)")
-        .eq("responsavel_id", ticket!.criado_por)
-        .order("patrimonio");
+      const { data, error } = await (supabase as any).rpc("inventory_safe");
       if (error) throw error;
-      return data ?? [];
+      return ((data ?? []) as any[])
+        .filter((i) => i.responsavel_id === ticket!.criado_por)
+        .sort((a, b) => String(a.patrimonio).localeCompare(String(b.patrimonio)));
     },
   });
 
@@ -172,11 +170,8 @@ function ChamadoDetail() {
     queryFn: async () => {
       const printerId = (ticket as any).printer_id as string;
       const tonerIdLocal = (ticket as any).toner_id as string | null;
-      const { data: printer } = await supabase
-        .from("inventory_items")
-        .select("id, patrimonio, fabricante, modelo")
-        .eq("id", printerId)
-        .maybeSingle();
+      const { data: safeItems } = await (supabase as any).rpc("inventory_safe");
+      const printer = ((safeItems ?? []) as any[]).find((i) => i.id === printerId) ?? null;
       let toner: any = null;
       if (tonerIdLocal) {
         const { data: t } = await (supabase as any)
