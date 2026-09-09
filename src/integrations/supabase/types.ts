@@ -631,6 +631,13 @@ export type Database = {
             referencedRelation: "inventory_items"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "printer_departments_inventory_item_id_fkey"
+            columns: ["inventory_item_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_items_safe"
+            referencedColumns: ["id"]
+          },
         ]
       }
       printer_toner_links: {
@@ -658,6 +665,13 @@ export type Database = {
             columns: ["inventory_item_id"]
             isOneToOne: false
             referencedRelation: "inventory_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "printer_toner_links_inventory_item_id_fkey"
+            columns: ["inventory_item_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_items_safe"
             referencedColumns: ["id"]
           },
           {
@@ -1517,6 +1531,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "tickets_printer_id_fkey"
+            columns: ["printer_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_items_safe"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "tickets_priority_id_fkey"
             columns: ["priority_id"]
             isOneToOne: false
@@ -1585,6 +1606,13 @@ export type Database = {
             columns: ["inventory_item_id"]
             isOneToOne: false
             referencedRelation: "inventory_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "toner_movements_inventory_item_id_fkey"
+            columns: ["inventory_item_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_items_safe"
             referencedColumns: ["id"]
           },
           {
@@ -1700,7 +1728,104 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      inventory_items_safe: {
+        Row: {
+          anydesk_id: string | null
+          category_id: string | null
+          computer_name: string | null
+          deleted_at: string | null
+          fabricante: string | null
+          id: string | null
+          ip_address: string | null
+          localizacao: string | null
+          mac_address: string | null
+          modelo: string | null
+          numero_serie: string | null
+          observacoes: string | null
+          operating_system: string | null
+          operating_system_id: string | null
+          patrimonio: string | null
+          responsavel_id: string | null
+          status: string | null
+          status_id: string | null
+          teamviewer_id: string | null
+          tipo: string | null
+        }
+        Insert: {
+          anydesk_id?: never
+          category_id?: string | null
+          computer_name?: string | null
+          deleted_at?: string | null
+          fabricante?: string | null
+          id?: string | null
+          ip_address?: never
+          localizacao?: string | null
+          mac_address?: never
+          modelo?: string | null
+          numero_serie?: string | null
+          observacoes?: string | null
+          operating_system?: string | null
+          operating_system_id?: string | null
+          patrimonio?: string | null
+          responsavel_id?: string | null
+          status?: string | null
+          status_id?: string | null
+          teamviewer_id?: never
+          tipo?: string | null
+        }
+        Update: {
+          anydesk_id?: never
+          category_id?: string | null
+          computer_name?: string | null
+          deleted_at?: string | null
+          fabricante?: string | null
+          id?: string | null
+          ip_address?: never
+          localizacao?: string | null
+          mac_address?: never
+          modelo?: string | null
+          numero_serie?: string | null
+          observacoes?: string | null
+          operating_system?: string | null
+          operating_system_id?: string | null
+          patrimonio?: string | null
+          responsavel_id?: string | null
+          status?: string | null
+          status_id?: string | null
+          teamviewer_id?: never
+          tipo?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_items_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_items_operating_system_id_fkey"
+            columns: ["operating_system_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_operating_systems"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_items_responsavel_id_fkey"
+            columns: ["responsavel_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_items_status_id_fkey"
+            columns: ["status_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_statuses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       current_department_id: { Args: never; Returns: string }
